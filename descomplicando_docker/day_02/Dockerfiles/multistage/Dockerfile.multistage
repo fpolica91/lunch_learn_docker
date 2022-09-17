@@ -1,0 +1,10 @@
+FROM golang AS builder
+
+WORKDIR /app
+ADD . /app
+RUN go build -o main 
+
+FROM alpine 
+WORKDIR /curr 
+COPY --from=builder /app/main /curr
+ENTRYPOINT ./main
